@@ -1,4 +1,4 @@
-Flask==1.1.2
+Flask==2.0.1
 
 # Flask Extensions
 Flask-Assets==0.12
@@ -15,4 +15,4 @@ pyjsend==0.2.2
 Werkzeug==0.16.1
 gevent== 21.12.0
 bson ==0.5.10
-scikit-learn==0.24.2
+#scikit-learn
