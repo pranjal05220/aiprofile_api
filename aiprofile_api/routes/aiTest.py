@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from aiprofile_api.utils import api_checker
 from dictionary_controller.dict_app import translate
 
@@ -20,3 +20,4 @@ def customers():
             print(item)
     else:
         print(output)
+    return jsonify({"output": output})
