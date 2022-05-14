@@ -21,3 +21,13 @@ def customers():
     else:
         print(output)
     return jsonify({"output": output})
+@aiTest.route('/calc', methods=['POST'], strict_slashes=False)
+def rohit():
+    payload = request.get_json()
+    print(payload)
+    if payload["operation"]=="add":
+        return jsonify({"result":payload["num1"]+payload["num2"]})
+    elif payload["operation"]=="sub":
+        return jsonify({"result":payload["num1"]-payload["num2"]})
+    elif payload["operation"]=="mul":
+        return jsonify({"result":payload["num1"]*payload["num2"]})
