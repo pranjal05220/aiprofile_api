@@ -1,3 +1,7 @@
+from re import T
+
+from lib2to3.fixer_util import p2, p1
+
 from flask import Blueprint, request, jsonify
 from aiprofile_api.utils import api_checker
 from dictionary_controller.dict_app import translate
@@ -33,5 +37,29 @@ def rohit():
         return jsonify({"result":payload["num1"]*payload["num2"]})
     elif payload["operation"] == "div":
         return jsonify({"result": payload["num1"] / payload["num2"]})
+@aiTest.route('/interest', methods=['POST'], strict_slashes=False)
+def simple():
+    payload = request.get_json()
+    print(payload)
+    p=payload["principle_amount"]
+    r=payload["rate_of_interest"]
+    t=payload["time"]
+    if payload["operation"]=="simple_interest":
+
+        simple_interest=(p*r*t)/100
+        total_amount=p+simple_interest
+        return jsonify({"simple_interest": simple_interest,"total_amount":total_amount})
+    elif payload["operation"]=="compound_interest":
+        compound_interest=00
+        total_amount=p+compound_interest
+        return jsonify({"compound_interest": compound_interest, "total_amount": total_amount})
+
+
+
+
+
+
+
+
 
 
