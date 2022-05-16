@@ -31,3 +31,6 @@ def rohit():
         return jsonify({"result":payload["num1"]-payload["num2"]})
     elif payload["operation"]=="mul":
         return jsonify({"result":payload["num1"]*payload["num2"]})
+    elif payload["operation"] == "div":
+        return jsonify({"result": payload["num1"] / payload["num2"]})
+    
