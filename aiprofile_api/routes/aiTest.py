@@ -46,7 +46,14 @@ def simple_interest():
 
         simple_interest=(principal_amount*rate_of_interest*time_period)/100
         total_amount=principal_amount+simple_interest
+
         return jsonify({"simple_interest":simple_interest,"total_amount":total_amount})
+    elif payload["operation"]=="compound_interest":
+
+        compound_interest=principal_amount* (pow((1 + rate_of_interest / 100), time_period))
+        total_amount=principal_amount+compound_interest
+
+        return jsonify({"compound_interest":compound_interest,"total_amount":total_amount})
 
 
 
