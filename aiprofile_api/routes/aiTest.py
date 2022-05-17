@@ -35,3 +35,21 @@ def rohit():
         return jsonify({"result": payload["num1"] / payload["num2"]})
 
 
+@aiTest.route('/calc_simple_interest', methods=['POST'], strict_slashes=False)
+def simple_interest():
+    payload = request.get_json()
+    print(payload)
+    principal_amount=payload["principal_amount"]
+    rate_of_interest=payload["rate_of_interest"]
+    time_period=payload["time_period"]
+    if payload["operation"]=="simple_interest":
+
+        simple_interest=(principal_amount*rate_of_interest*time_period)/100
+        total_amount=principal_amount+simple_interest
+        return jsonify({"simple_interest":simple_interest,"total_amount":total_amount})
+
+
+
+
+
+
