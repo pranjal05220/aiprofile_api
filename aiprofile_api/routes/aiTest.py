@@ -2,7 +2,8 @@ from flask import Blueprint, request, jsonify
 from aiprofile_api.utils import api_checker
 from check_numbers.find_prime import check_prime
 from dictionary_controller.dict_app import translate
-from simple_interest_controller.simple_and_compund_interest import compound_find_interest, simple_find_interest
+from simple_interest_controller.simple_and_compund_interest import compound_find_interest, simple_find_interest, \
+    find_prime_number
 
 aiTest = Blueprint("aiTest", __name__, url_prefix="/aiTest")
 
@@ -66,6 +67,75 @@ def prime():
     num=payload["num"]
     num, status=check_prime(num)
     return jsonify({"number":num,"status": status})
+
+
+@aiTest.route('/check_prime_numbers', methods=['POST'], strict_slashes=False)
+def prime_number():
+    payload=request.get_json()
+    prime_lst=find_prime_number(payload)
+    return jsonify({"num":prime_lst})
+
+
+
+
+
+@aiTest.route('/check_bigest_number', methods=['POST'], strict_slashes=False)
+def bigest_number():
+    payload = request.get_json()
+    num1=payload["num1"]
+    num2=payload["num2"]
+    num3=payload["num3"]
+
+    num1 = 10
+    num2 = 20
+    num3 = 30
+
+    if (num1 >= num2) and (num1 >= num3):
+        largest = num1
+    elif (num2 >= num1) and (num2 >= num3):
+        largest = num2
+    else:
+        largest = num3
+
+    print("The largest number is", largest)
+    return jsonify(({"largest_num": largest}))
+
+
+@aiTest.route('/add_muliply_largest', methods=['POST'], strict_slashes=False)
+def add():
+
+    payload = request.get_json()
+
+    num1 = payload["num1"]
+    num2 = payload["num2"]
+    num3 = payload["num3"]
+    num4 = payload["num4"]
+
+    sum = num1+num2+num3+num4
+
+    print("The sum of given numbers is: ", sum)
+
+    multiply = num1*num2*num3*num4
+
+    print("The multiply of given numbers is: ", multiply)
+
+    if (num1 >= num2) and (num1 >= num3) and(num1>=num4):
+        largest = num1
+    elif (num2 >= num1) and (num2 >= num3)and(num2>=num4):
+        largest = num2
+    elif (num3 >= num1) and (num3 >= num2) and (num3>=num4):
+        largest = num3
+    else:
+        largest = num4
+
+
+    print("The largest number is", largest)
+    return jsonify(({"largest_num": largest,"sum":sum,"multiply":multiply}))
+
+
+
+
+
 
 
 
