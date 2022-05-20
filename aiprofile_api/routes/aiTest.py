@@ -49,19 +49,10 @@ def simple_interest():
     rate_of_interest = payload["rate_of_interest"]
     time_period = payload["time_period"]
     if payload["operation"] == "simple_interest":
-
         simple_interest, total_amount = simple_find_interest(principal_amount, rate_of_interest, time_period)
-
-        # simple_interest=(principal_amount*rate_of_interest*time_period)/100
-        # total_amount=principal_amount+simple_interest
-
         return jsonify({"simple_interest": simple_interest, "total_amount": total_amount})
     elif payload["operation"] == "compound_interest":
         compound_interest, total_amount = compound_find_interest(principal_amount, rate_of_interest, time_period)
-
-        # compound_interest = principal_amount * (pow((1 + rate_of_interest / 100), time_period))
-        # total_amount=principal_amount+compound_interest
-
         return jsonify({"a": compound_interest, "b": total_amount})
 
 
@@ -118,8 +109,10 @@ def fibo_number():
     return jsonify({"fibonacci": lst})
 
 
-
-
-
-
-
+@aiTest.route('/inter_section1', methods=['POST'], strict_slashes=False)
+def intersection():
+    payload = request.get_json()
+    lst1 = payload["lst1"]
+    lst2 = payload["lst2"]
+    inter_s = [value for value in lst1 if value in lst2]
+    return jsonify({"Common_No": inter_s})
