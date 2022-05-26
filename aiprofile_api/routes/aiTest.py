@@ -4,6 +4,9 @@ from check_numbers.find_prime import check_prime, prime_no_btw, num_add_mul_larg
 from dictionary_controller.dict_app import translate
 from simple_interest_controller.simple_and_compund_interest import compound_find_interest, simple_find_interest
 
+
+from trignometry_controller.trig_controller import calc_trig_function
+
 aiTest = Blueprint("aiTest", __name__, url_prefix="/aiTest")
 
 
@@ -116,3 +119,14 @@ def intersection():
     lst2 = payload["lst2"]
     inter_s = [value for value in lst1 if value in lst2]
     return jsonify({"Common_No": inter_s})
+
+
+@aiTest.route('/tri_function', methods=['POST'], strict_slashes=False)
+def trignometry():
+    payload = request.get_json()
+    result = calc_trig_function(payload)
+
+    return jsonify({"result": result})
+
+
+
