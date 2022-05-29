@@ -3,7 +3,7 @@ from aiprofile_api.utils import api_checker
 from check_numbers.find_prime import check_prime, prime_no_btw, num_add_mul_large, fib_series
 from dictionary_controller.dict_app import translate
 from simple_interest_controller.simple_and_compund_interest import compound_find_interest, simple_find_interest
-
+import math
 
 from trignometry_controller.trig_controller import calc_trig_function
 
@@ -127,6 +127,98 @@ def trignometry():
     result = calc_trig_function(payload)
 
     return jsonify({"result": result})
+
+@aiTest.route('/f_sum', methods=['POST'], strict_slashes=False)
+def sum_lst():
+    payload=request.get_json()
+    lst=payload["lst"]
+    result=math.fsum(lst)
+    return jsonify({"result":result})
+
+
+@aiTest.route('/power_number', methods=['POST'], strict_slashes=False)
+def power_fun():
+    payload=request.get_json()
+    num1=payload["num1"]
+    num2=payload["num2"]
+    result=math.pow(num1,num2)
+    return jsonify({"result":result})
+
+
+
+@aiTest.route('/square_root', methods=['POST'], strict_slashes=False)
+def sqrt_fun():
+    payload=request.get_json()
+    x=payload["x"]
+    result=math.sqrt(x)
+    return jsonify({"result":result})
+
+
+@aiTest.route('/prod_element', methods=['POST'], strict_slashes=False)
+def product_fun():
+    payload=request.get_json()
+    ele=payload["ele"]
+    result=math.prod(ele)
+    return jsonify({"result":result})
+
+
+
+@aiTest.route('/log_base_ten', methods=['POST'], strict_slashes=False)
+def log_bten():
+    payload=request.get_json()
+    value=payload["value"]
+    result=math.log10(value)
+    return jsonify({"result":result})
+
+@aiTest.route('/get_mod_fun', methods=['POST'], strict_slashes=False)
+def mod_fun():
+    payload=request.get_json()
+    num1=payload["num1"]
+    num2=payload["num2"]
+    result=math.fmod(num1,num2)
+    return jsonify({"result":result})
+
+
+@aiTest.route('/get_factorial_fun', methods=['POST'], strict_slashes=False)
+def facto_fun():
+    payload=request.get_json()
+    num=payload["num"]
+    result=math.factorial(num)
+    return jsonify({"result":result})
+
+
+@aiTest.route('/get_exponential_fun', methods=['POST'], strict_slashes=False)
+def exponential():
+    payload=request.get_json()
+    x=payload["x"]
+    result=math.exp(x)
+    return jsonify({"result":result})
+
+
+@aiTest.route('/get_absolute', methods=['POST'], strict_slashes=False)
+def absolute():
+    payload=request.get_json()
+    num=payload["num"]
+    result=math.fabs(num)
+    return jsonify({"result":result})
+
+
+@aiTest.route('/get_floor', methods=['POST'], strict_slashes=False)
+def floor_fun():
+    payload=request.get_json()
+    num=payload["num"]
+    result=math.floor(num)
+    return jsonify({"result":result})
+
+
+@aiTest.route('/get_isclose_fun', methods=['POST'], strict_slashes=False)
+def isclose_fun():
+    payload=request.get_json()
+    num1=payload["num1"]
+    num2=payload["num2"]
+
+    result=math.isclose(num1,num2)
+    return jsonify({"result":result})
 
 
 
