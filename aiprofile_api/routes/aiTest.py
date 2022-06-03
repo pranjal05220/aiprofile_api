@@ -1,3 +1,5 @@
+import re
+
 from flask import Blueprint, request, jsonify
 from aiprofile_api.utils import api_checker
 from check_numbers.find_prime import check_prime, prime_no_btw, num_add_mul_large, fib_series
@@ -219,6 +221,24 @@ def isclose_fun():
 
     result=math.isclose(num1,num2)
     return jsonify({"result":result})
+
+
+
+@aiTest.route('/find_latters', methods=['POST'], strict_slashes=False)
+def find():
+    payload = request.get_json()
+    text=payload["txt"]
+    x = re.findall("[a-m]", text)
+    return jsonify({"result": x })
+
+
+@aiTest.route('/find_moblie_num', methods=['POST'], strict_slashes=False)
+def find_num():
+    payload = request.get_json()
+    text=payload["data"]
+    regex = '\d+'
+    match = re.findall(regex, text)
+    return jsonify({"result":match})
 
 
 
