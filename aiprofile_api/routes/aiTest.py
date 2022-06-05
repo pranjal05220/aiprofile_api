@@ -1,5 +1,5 @@
 import re
-
+from datetime import date, datetime
 from flask import Blueprint, request, jsonify
 from aiprofile_api.utils import api_checker
 from check_numbers.find_prime import check_prime, prime_no_btw, num_add_mul_large, fib_series
@@ -239,6 +239,31 @@ def find_num():
     regex = '\d+'
     match = re.findall(regex, text)
     return jsonify({"result":match})
+
+
+
+
+
+@aiTest.route('/find_clear_data', methods=['POST'], strict_slashes=False)
+def find_data():
+    payload = request.get_json()
+    text=payload["data"]
+    match = re.sub(r"(http[s]?\://\S+)|([\[\(].*[\)\]])|([#@]\S+)|\n", "", text)
+    return jsonify({"result":match})
+
+
+@aiTest.route('/dateofbirth', methods=['POST'], strict_slashes=False)
+def calculateAge():
+    payload = request.get_json()
+    birthDate = datetime.strptime (payload['date'],"%d/%m/%Y")
+    today = date.today()
+    age = today.year - birthDate.year -((today.month, today.day) <(birthDate.month, birthDate.day))
+    return jsonify({"result":age})
+
+
+
+
+
 
 
 
