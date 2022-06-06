@@ -1,6 +1,9 @@
 import re
+import datetime
 from datetime import date, datetime
 from flask import Blueprint, request, jsonify
+from sympy.concrete import delta
+
 from aiprofile_api.utils import api_checker
 from check_numbers.find_prime import check_prime, prime_no_btw, num_add_mul_large, fib_series
 from dictionary_controller.dict_app import translate
@@ -259,6 +262,17 @@ def calculateAge():
     today = date.today()
     age = today.year - birthDate.year -((today.month, today.day) <(birthDate.month, birthDate.day))
     return jsonify({"result":age})
+
+
+@aiTest.route('/date_of_birth_in_days', methods=['POST'], strict_slashes=False)
+def calculate_age_in_years_months_days():
+    payload = request.get_json()
+
+    day1 = datetime.strptime(payload["t1"],"%d/%m/%Y")
+    day2 = datetime.strptime(payload["t2"],"%d/%m/%Y")
+    delta1 = (day1-day2).days
+    age1 = f"{delta1//365} year {(delta1%365)//30} month {(delta1%365)%30} day"
+    return jsonify({"result":age1})
 
 
 
