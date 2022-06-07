@@ -1,5 +1,6 @@
 import re
 import datetime
+from calendar import weekday, calendar
 from datetime import date, datetime
 from flask import Blueprint, request, jsonify
 from sympy.concrete import delta
@@ -273,6 +274,16 @@ def calculate_age_in_years_months_days():
     delta1 = (day1-day2).days
     age1 = f"{delta1//365} year {(delta1%365)//30} month {(delta1%365)%30} day"
     return jsonify({"result":age1})
+
+
+
+@aiTest.route('/find_day', methods=['POST'], strict_slashes=False)
+def findDay():
+    payload = request.get_json()
+    born = datetime.strptime(payload["date"], "%d/%m/%Y")
+    birth_day=born.strftime("%A")
+    return jsonify({"result":birth_day})
+
 
 
 
