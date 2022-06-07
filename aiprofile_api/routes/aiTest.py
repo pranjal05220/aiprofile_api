@@ -1,6 +1,10 @@
 import re
-
+import datetime
+from calendar import weekday, calendar
+from datetime import date, datetime
 from flask import Blueprint, request, jsonify
+from sympy.concrete import delta
+
 from aiprofile_api.utils import api_checker
 from check_numbers.find_prime import check_prime, prime_no_btw, num_add_mul_large, fib_series
 from dictionary_controller.dict_app import translate
@@ -239,6 +243,52 @@ def find_num():
     regex = '\d+'
     match = re.findall(regex, text)
     return jsonify({"result":match})
+
+
+
+
+
+@aiTest.route('/find_clear_data', methods=['POST'], strict_slashes=False)
+def find_data():
+    payload = request.get_json()
+    text=payload["data"]
+    match = re.sub(r"(http[s]?\://\S+)|([\[\(].*[\)\]])|([#@]\S+)|\n", "", text)
+    return jsonify({"result":match})
+
+
+@aiTest.route('/dateofbirth', methods=['POST'], strict_slashes=False)
+def calculateAge():
+    payload = request.get_json()
+    birthDate = datetime.strptime (payload['date'],"%d/%m/%Y")
+    today = date.today()
+    age = today.year - birthDate.year -((today.month, today.day) <(birthDate.month, birthDate.day))
+    return jsonify({"result":age})
+
+
+@aiTest.route('/date_of_birth_in_days', methods=['POST'], strict_slashes=False)
+def calculate_age_in_years_months_days():
+    payload = request.get_json()
+
+    day1 = datetime.strptime(payload["t1"],"%d/%m/%Y")
+    day2 = datetime.strptime(payload["t2"],"%d/%m/%Y")
+    delta1 = (day1-day2).days
+    age1 = f"{delta1//365} year {(delta1%365)//30} month {(delta1%365)%30} day"
+    return jsonify({"result":age1})
+
+
+
+@aiTest.route('/find_day', methods=['POST'], strict_slashes=False)
+def findDay():
+    payload = request.get_json()
+    born = datetime.strptime(payload["date"], "%d/%m/%Y")
+    birth_day=born.strftime("%A")
+    return jsonify({"result":birth_day})
+
+
+
+
+
+
 
 
 
