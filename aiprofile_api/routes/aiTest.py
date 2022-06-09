@@ -290,16 +290,7 @@ def findDayyear():
     payload = request.get_json()
     born = datetime.strptime(payload["date"], "%d/%m/%Y")
     birth_day=born.strftime("%A")
-    birth_year = born.strftime("%m" " " "%B" " " "%Y")
+    birth_year = born.strftime("%d" " " "%B" " " "%Y")
     today = date.today()
     age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
     return jsonify({"year": age, "day": birth_day, "date_of_birth": birth_year})
-
-
-
-
-
-
-
-
-
