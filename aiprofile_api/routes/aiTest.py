@@ -134,163 +134,171 @@ def trignometry():
 
     return jsonify({"result": result})
 
+
 @aiTest.route('/f_sum', methods=['POST'], strict_slashes=False)
 def sum_lst():
-    payload=request.get_json()
-    lst=payload["lst"]
-    result=math.fsum(lst)
-    return jsonify({"result":result})
+    payload = request.get_json()
+    lst = payload["lst"]
+    result = math.fsum(lst)
+    return jsonify({"result": result})
 
 
 @aiTest.route('/power_number', methods=['POST'], strict_slashes=False)
 def power_fun():
-    payload=request.get_json()
-    num1=payload["num1"]
-    num2=payload["num2"]
-    result=math.pow(num1,num2)
-    return jsonify({"result":result})
-
+    payload = request.get_json()
+    num1 = payload["num1"]
+    num2 = payload["num2"]
+    result = math.pow(num1, num2)
+    return jsonify({"result": result})
 
 
 @aiTest.route('/square_root', methods=['POST'], strict_slashes=False)
 def sqrt_fun():
-    payload=request.get_json()
-    x=payload["x"]
-    result=math.sqrt(x)
-    return jsonify({"result":result})
+    payload = request.get_json()
+    x = payload["x"]
+    result = math.sqrt(x)
+    return jsonify({"result": result})
 
 
 @aiTest.route('/prod_element', methods=['POST'], strict_slashes=False)
 def product_fun():
-    payload=request.get_json()
-    ele=payload["ele"]
-    result=math.prod(ele)
-    return jsonify({"result":result})
-
+    payload = request.get_json()
+    ele = payload["ele"]
+    result = math.prod(ele)
+    return jsonify({"result": result})
 
 
 @aiTest.route('/log_base_ten', methods=['POST'], strict_slashes=False)
 def log_bten():
-    payload=request.get_json()
-    value=payload["value"]
-    result=math.log10(value)
-    return jsonify({"result":result})
+    payload = request.get_json()
+    value = payload["value"]
+    result = math.log10(value)
+    return jsonify({"result": result})
+
 
 @aiTest.route('/get_mod_fun', methods=['POST'], strict_slashes=False)
 def mod_fun():
-    payload=request.get_json()
-    num1=payload["num1"]
-    num2=payload["num2"]
-    result=math.fmod(num1,num2)
-    return jsonify({"result":result})
+    payload = request.get_json()
+    num1 = payload["num1"]
+    num2 = payload["num2"]
+    result = math.fmod(num1, num2)
+    return jsonify({"result": result})
 
 
 @aiTest.route('/get_factorial_fun', methods=['POST'], strict_slashes=False)
 def facto_fun():
-    payload=request.get_json()
-    num=payload["num"]
-    result=math.factorial(num)
-    return jsonify({"result":result})
+    payload = request.get_json()
+    num = payload["num"]
+    result = math.factorial(num)
+    return jsonify({"result": result})
 
 
 @aiTest.route('/get_exponential_fun', methods=['POST'], strict_slashes=False)
 def exponential():
-    payload=request.get_json()
-    x=payload["x"]
-    result=math.exp(x)
-    return jsonify({"result":result})
+    payload = request.get_json()
+    x = payload["x"]
+    result = math.exp(x)
+    return jsonify({"result": result})
 
 
 @aiTest.route('/get_absolute', methods=['POST'], strict_slashes=False)
 def absolute():
-    payload=request.get_json()
-    num=payload["num"]
-    result=math.fabs(num)
-    return jsonify({"result":result})
+    payload = request.get_json()
+    num = payload["num"]
+    result = math.fabs(num)
+    return jsonify({"result": result})
 
 
 @aiTest.route('/get_floor', methods=['POST'], strict_slashes=False)
 def floor_fun():
-    payload=request.get_json()
-    num=payload["num"]
-    result=math.floor(num)
-    return jsonify({"result":result})
+    payload = request.get_json()
+    num = payload["num"]
+    result = math.floor(num)
+    return jsonify({"result": result})
 
 
 @aiTest.route('/get_isclose_fun', methods=['POST'], strict_slashes=False)
 def isclose_fun():
-    payload=request.get_json()
-    num1=payload["num1"]
-    num2=payload["num2"]
+    payload = request.get_json()
+    num1 = payload["num1"]
+    num2 = payload["num2"]
 
-    result=math.isclose(num1,num2)
-    return jsonify({"result":result})
-
+    result = math.isclose(num1, num2)
+    return jsonify({"result": result})
 
 
 @aiTest.route('/find_latters', methods=['POST'], strict_slashes=False)
 def find():
     payload = request.get_json()
-    text=payload["txt"]
+    text = payload["txt"]
     x = re.findall("[a-m]", text)
-    return jsonify({"result": x })
+    return jsonify({"result": x})
 
 
 @aiTest.route('/find_moblie_num', methods=['POST'], strict_slashes=False)
 def find_num():
     payload = request.get_json()
-    text=payload["data"]
+    text = payload["data"]
     regex = '\d+'
     match = re.findall(regex, text)
-    return jsonify({"result":match})
-
-
-
+    return jsonify({"result": match})
 
 
 @aiTest.route('/find_clear_data', methods=['POST'], strict_slashes=False)
 def find_data():
     payload = request.get_json()
-    text=payload["data"]
+    text = payload["data"]
     match = re.sub(r"(http[s]?\://\S+)|([\[\(].*[\)\]])|([#@]\S+)|\n", "", text)
-    return jsonify({"result":match})
+    return jsonify({"result": match})
 
 
 @aiTest.route('/dateofbirth', methods=['POST'], strict_slashes=False)
 def calculateAge():
     payload = request.get_json()
-    birthDate = datetime.strptime (payload['date'],"%d/%m/%Y")
+    birthDate = datetime.strptime(payload['date'], "%d/%m/%Y")
     today = date.today()
-    age = today.year - birthDate.year -((today.month, today.day) <(birthDate.month, birthDate.day))
-    return jsonify({"result":age})
+    age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
+    return jsonify({"result": age})
 
 
 @aiTest.route('/date_of_birth_in_days', methods=['POST'], strict_slashes=False)
 def calculate_age_in_years_months_days():
     payload = request.get_json()
-
-    day1 = datetime.strptime(payload["t1"],"%d/%m/%Y")
-    day2 = datetime.strptime(payload["t2"],"%d/%m/%Y")
-    delta1 = (day1-day2).days
-    age1 = f"{delta1//365} year {(delta1%365)//30} month {(delta1%365)%30} day"
-    return jsonify({"result":age1})
-
+    day1 = datetime.strptime(payload["t1"], "%d/%m/%Y")
+    day2 = datetime.strptime(payload["t2"], "%d/%m/%Y")
+    delta1 = (day1 - day2).days
+    age1 = f"{delta1 // 365} year {(delta1 % 365) // 30} month {(delta1 % 365) % 30} day"
+    return jsonify({"result": age1})
 
 
 @aiTest.route('/find_day', methods=['POST'], strict_slashes=False)
 def findDay():
     payload = request.get_json()
     born = datetime.strptime(payload["date"], "%d/%m/%Y")
-    birth_day=born.strftime("%A")
-    return jsonify({"result":birth_day})
+    birth_day = born.strftime("%A")
+    return jsonify({"result": birth_day})
 
 
 @aiTest.route('/find_day_year', methods=['POST'], strict_slashes=False)
 def findDayyear():
     payload = request.get_json()
     born = datetime.strptime(payload["date"], "%d/%m/%Y")
-    birth_day=born.strftime("%A")
+    birth_day = born.strftime("%A")
     birth_year = born.strftime("%d" " " "%B" " " "%Y")
     today = date.today()
     age = today.year - born.year - ((today.month, today.day) < (born.month, born.day))
     return jsonify({"year": age, "day": birth_day, "date_of_birth": birth_year})
+
+
+@aiTest.route('/find_bank_details', methods=['POST'], strict_slashes=False)
+def bank_details():
+    payload = request.get_json()
+    temp = 'UPDATE: INR (.*) (.*)ted from (.*) (.*) on (.*). Info: (.*) Avl bal:INR (.*)'
+    if re.search(temp, payload["data"]):
+        bank_name = re.search(temp, payload["data"]).group(3)
+        date_time = re.search(temp, payload["data"]).group(5)
+        amount = re.search(temp, payload["data"]).group(1)
+        #transaction_type = re.findall("debited|credited", payload["data"])
+        transaction_type = re.search(temp, payload["data"]).group(2)
+        balance = re.search(temp, payload["data"]).group(7)
+    return jsonify({"Bank Name": bank_name, "Nature Type": transaction_type + "ted", "Amount - Rs.": amount, "Date": date_time, "Available Balance - Rs.": balance})
