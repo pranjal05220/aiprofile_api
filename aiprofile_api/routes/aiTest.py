@@ -298,60 +298,76 @@ def bank_details():
         bank_name = re.search(temp, payload["data"]).group(3)
         date_time = re.search(temp, payload["data"]).group(5)
         amount = re.search(temp, payload["data"]).group(1)
-        #transaction_type = re.findall("debited|credited", payload["data"])
+        # transaction_type = re.findall("debited|credited", payload["data"])
         transaction_type = re.search(temp, payload["data"]).group(2)
         balance = re.search(temp, payload["data"]).group(7)
-    return jsonify({"Bank Name": bank_name, "Nature Type": transaction_type + "ted", "Amount - Rs.": amount, "Date": date_time, "Available Balance - Rs.": balance})
+    return jsonify(
+        {"bank_name": bank_name, "nature_type": transaction_type + "ted", "amount - rs.": amount, "date": date_time,
+         "available_balance - rs.": balance})
 
 
 @aiTest.route('/get_shop_info', methods=['POST'], strict_slashes=False)
 def shop_info():
-    payload=request.get_json()
-    pattern="(.*) has requested money from you on(.*) Rs.(.*) will be debited from your account on approving the request"
-    if re.search(pattern,payload["text"]):
-        reciever=re.search(pattern,payload["text"]).group(1)
-        source=re.search(pattern,payload["text"]).group(2)
-        amount=int(re.search(pattern,payload["text"]).group(3))
-    return jsonify({"Payment_rec":reciever,"Source_paym":source,"Total_amount_Rs":amount})
-
+    payload = request.get_json()
+    pattern = "(.*) has requested money from you on(.*) Rs.(.*) will be debited from your account on approving the request"
+    if re.search(pattern, payload["text"]):
+        receiver = re.search(pattern, payload["text"]).group(1)
+        source = re.search(pattern, payload["text"]).group(2)
+        amount = int(re.search(pattern, payload["text"]).group(3))
+    return jsonify({"payment_rec": receiver, "source_paytm": source, "total_amount_Rs": amount})
 
 
 @aiTest.route('/get_tranc_detail', methods=['POST'], strict_slashes=False)
 def trans_info():
-    payload=request.get_json()
-    pattern="Ac(.*) (.*) with Rs.(.*),(.*) thru ATM (.*).Aval Bal Rs.(.*) Helpline(.*).If (.*) card."
-    if re.search(pattern,payload["text"]):
-        account_no=re.search(pattern,payload["text"]).group(1)
-        nature=re.search(pattern,payload["text"]).group(2)
-        amount=int(float(re.search(pattern,payload["text"]).group(3)))
-        date_in=re.search(pattern,payload["text"]).group(4)
-        atm_no=re.search(pattern,payload["text"]).group(5)
-        avail_bal=re.search(pattern,payload["text"]).group(6)
-        help_no=re.search(pattern,payload["text"]).group(7)
-    return jsonify({"A/c_No":account_no,"Pay_nature":nature,"Amount_use":amount,"Date":date_in,"ATM_info":atm_no,"Total_Amt":avail_bal,"helpline":help_no})
-
+    payload = request.get_json()
+    pattern = "Ac(.*) (.*) with Rs.(.*),(.*) thru ATM (.*).Aval Bal Rs.(.*) Helpline(.*).If (.*) card."
+    if re.search(pattern, payload["text"]):
+        account_no = re.search(pattern, payload["text"]).group(1)
+        nature = re.search(pattern, payload["text"]).group(2)
+        amount = int(float(re.search(pattern, payload["text"]).group(3)))
+        date_in = re.search(pattern, payload["text"]).group(4)
+        atm_no = re.search(pattern, payload["text"]).group(5)
+        avail_bal = re.search(pattern, payload["text"]).group(6)
+        help_no = re.search(pattern, payload["text"]).group(7)
+    return jsonify(
+        {"a/c_No": account_no, "pay_nature": nature, "amount_use": amount, "Date": date_in, "ATM_info": atm_no,
+         "Total_Amt": avail_bal, "helpline": help_no})
 
 
 @aiTest.route('/get_recharge_info', methods=['POST'], strict_slashes=False)
 def recharge_info():
-    payload=request.get_json()
-    pattern="Rs.(.*) is successful for your (.*) number (.*).Entitlement: Benefits:(.*) \((.*)\). Validity: Base Plans validity Transaction ID:(.*)"
+    payload = request.get_json()
+    pattern = "Rs.(.*) is successful for your (.*) number (.*).Entitlement: Benefits:(.*) \((.*)\). Validity: Base Plans validity Transaction ID:(.*)"
     if re.search(pattern, payload["text"]):
-        amount=int(float(re.search(pattern,payload["text"]).group(1)))
-        sim=re.search(pattern,payload["text"]).group(2)
-        mob_no=int(re.search(pattern,payload["text"]).group(3))
-        rech_type=re.search(pattern,payload["text"]).group(4)
-        cond_data=re.search(pattern,payload["text"]).group(5)
-        trns_id=re.search(pattern,payload["text"]).group(6)
-    return jsonify({"Recharge_Amount":amount,"Sim_Type":sim,"Mobile_No":mob_no,"Benefit_Type":rech_type,"Data_Condition":cond_data,"Tranaction_id":trns_id})
+        amount = int(float(re.search(pattern, payload["text"]).group(1)))
+        sim = re.search(pattern, payload["text"]).group(2)
+        mob_no = int(re.search(pattern, payload["text"]).group(3))
+        rech_type = re.search(pattern, payload["text"]).group(4)
+        cond_data = re.search(pattern, payload["text"]).group(5)
+        trns_id = re.search(pattern, payload["text"]).group(6)
+    return jsonify({"recharge_amount": amount, "sim_type": sim, "mobile_no": mob_no, "benefit_Type": rech_type,
+                    "data_condition": cond_data, "transaction_id": trns_id})
 
 
 @aiTest.route('/get_form_fee', methods=['POST'], strict_slashes=False)
 def form_fee():
-    payload=request.get_json()
-    ptrn="(.*) Ac is requesting payment of Rs.(.*) on(.*)"
-    if re.search(ptrn,payload["text1"]):
-        reciever=re.search(ptrn,payload["text1"]).group(1)
-        req_amount=re.search(ptrn,payload["text1"]).group(2)
-        mode_of=re.search(ptrn,payload["text1"]).group(3)
-    return jsonify({"Paid_to":reciever,"Amount":req_amount,"Mode_of_payment":mode_of})
+    payload = request.get_json()
+    ptrn = "(.*) Ac is requesting payment of Rs.(.*) on(.*)"
+    if re.search(ptrn, payload["text1"]):
+        receiver = re.search(ptrn, payload["text1"]).group(1)
+        req_amount = re.search(ptrn, payload["text1"]).group(2)
+        mode_of = re.search(ptrn, payload["text1"]).group(3)
+    return jsonify({"paid_to": receiver, "amount": req_amount, "mode_of_payment": mode_of})
+
+
+@aiTest.route('/find_recharge_details', methods=['POST'], strict_slashes=False)
+def recharge_details():
+    payload = request.get_json()
+    pattern = 'Recharge of Rs (.*) is successful for your (.*) on (.*), Transaction ID (.*). Check your balance, (.*)'
+    if re.search(pattern, payload["data"]):
+        recharge_amount = re.search(pattern, payload["data"]).group(1)
+        company_name = re.search(pattern, payload["data"]).group(2)
+        date_time = re.search(pattern, payload["data"]).group(3)
+        transaction_id = re.search(pattern, payload["data"]).group(4)
+    return jsonify({"recharge_amount Rs. ": recharge_amount, "comp_name": company_name, "date": date_time,
+                    "transaction_ID": transaction_id})
