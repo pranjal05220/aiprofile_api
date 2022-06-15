@@ -302,3 +302,56 @@ def bank_details():
         transaction_type = re.search(temp, payload["data"]).group(2)
         balance = re.search(temp, payload["data"]).group(7)
     return jsonify({"Bank Name": bank_name, "Nature Type": transaction_type + "ted", "Amount - Rs.": amount, "Date": date_time, "Available Balance - Rs.": balance})
+
+
+@aiTest.route('/get_shop_info', methods=['POST'], strict_slashes=False)
+def shop_info():
+    payload=request.get_json()
+    pattern="(.*) has requested money from you on(.*) Rs.(.*) will be debited from your account on approving the request"
+    if re.search(pattern,payload["text"]):
+        reciever=re.search(pattern,payload["text"]).group(1)
+        source=re.search(pattern,payload["text"]).group(2)
+        amount=int(re.search(pattern,payload["text"]).group(3))
+    return jsonify({"Payment_rec":reciever,"Source_paym":source,"Total_amount_Rs":amount})
+
+
+
+@aiTest.route('/get_tranc_detail', methods=['POST'], strict_slashes=False)
+def trans_info():
+    payload=request.get_json()
+    pattern="Ac(.*) (.*) with Rs.(.*),(.*) thru ATM (.*).Aval Bal Rs.(.*) Helpline(.*).If (.*) card."
+    if re.search(pattern,payload["text"]):
+        account_no=re.search(pattern,payload["text"]).group(1)
+        nature=re.search(pattern,payload["text"]).group(2)
+        amount=int(float(re.search(pattern,payload["text"]).group(3)))
+        date_in=re.search(pattern,payload["text"]).group(4)
+        atm_no=re.search(pattern,payload["text"]).group(5)
+        avail_bal=re.search(pattern,payload["text"]).group(6)
+        help_no=re.search(pattern,payload["text"]).group(7)
+    return jsonify({"A/c_No":account_no,"Pay_nature":nature,"Amount_use":amount,"Date":date_in,"ATM_info":atm_no,"Total_Amt":avail_bal,"helpline":help_no})
+
+
+
+@aiTest.route('/get_recharge_info', methods=['POST'], strict_slashes=False)
+def recharge_info():
+    payload=request.get_json()
+    pattern="Rs.(.*) is successful for your (.*) number (.*).Entitlement: Benefits:(.*) \((.*)\). Validity: Base Plans validity Transaction ID:(.*)"
+    if re.search(pattern, payload["text"]):
+        amount=int(float(re.search(pattern,payload["text"]).group(1)))
+        sim=re.search(pattern,payload["text"]).group(2)
+        mob_no=int(re.search(pattern,payload["text"]).group(3))
+        rech_type=re.search(pattern,payload["text"]).group(4)
+        cond_data=re.search(pattern,payload["text"]).group(5)
+        trns_id=re.search(pattern,payload["text"]).group(6)
+    return jsonify({"Recharge_Amount":amount,"Sim_Type":sim,"Mobile_No":mob_no,"Benefit_Type":rech_type,"Data_Condition":cond_data,"Tranaction_id":trns_id})
+
+
+@aiTest.route('/get_form_fee', methods=['POST'], strict_slashes=False)
+def form_fee():
+    payload=request.get_json()
+    ptrn="(.*) Ac is requesting payment of Rs.(.*) on(.*)"
+    if re.search(ptrn,payload["text1"]):
+        reciever=re.search(ptrn,payload["text1"]).group(1)
+        req_amount=re.search(ptrn,payload["text1"]).group(2)
+        mode_of=re.search(ptrn,payload["text1"]).group(3)
+    return jsonify({"Paid_to":reciever,"Amount":req_amount,"Mode_of_payment":mode_of})
