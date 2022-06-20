@@ -371,3 +371,4 @@ def recharge_details():
         transaction_id = re.search(pattern, payload["data"]).group(4)
     return jsonify({"recharge_amount Rs. ": recharge_amount, "comp_name": company_name, "date": date_time,
                     "transaction_ID": transaction_id})
+
