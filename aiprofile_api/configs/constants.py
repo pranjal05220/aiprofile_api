@@ -4,4 +4,4 @@ SERVICE_NAME = "AI_PROFILE_API_BACKEND"
 DEV = "dev"
 UAT = "uat"
 PROD = "prod"
-
+LOCAL = "local"
